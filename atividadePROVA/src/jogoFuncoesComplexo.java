@@ -4,6 +4,7 @@ import java.util.Random;
 public class jogoFuncoesComplexo {
     static Scanner sc = new Scanner(System.in);
     static Random rand = new Random();
+    static int defesa = 1;
 
     public static int atacar(int vidaMonstro){
         int[] rangeDano = {8, 12};
@@ -11,16 +12,15 @@ public class jogoFuncoesComplexo {
         String strAtaque = "NORMAL";
         if(rand.nextInt(100 + 1) > 80){
             critico = 2;
-            System.out.println("ATAQUE CRÍTICO");
             strAtaque = "CRÍTICO";
         }
         int dano = (rand.nextInt(rangeDano[1] - rangeDano[0] + 1) + rangeDano[0]) * critico;
         int vida = vidaMonstro - dano;
-        System.out.printf("Tafferson causou %d de dano com um ataque %s%n", dano, strAtaque, vida);
+        System.out.printf("Tafferson causou %d de dano com um ataque %s%n", dano, strAtaque);
         return vida;
     }
 
-    public static int ataqueDeMonstro(int vidaHeroi, boolean defesa){
+    public static int ataqueDeMonstro(int vidaHeroi, int defesa){
         //TODO leve essa logica para uma função chamada Ataque de Mostro()
         int ataqueMonstro = rand.nextInt(10) + 5; // dano entre 5 e 15
         boolean critico = rand.nextInt(100) < 15; // 15% de chance crítico
@@ -28,22 +28,30 @@ public class jogoFuncoesComplexo {
             ataqueMonstro *= 2;
             System.out.println("💥 O monstro acertou um CRÍTICO!");
         }
-        if(defesa == true){
-            ataqueMonstro = (int) Math.round(ataqueMonstro*0.5);
-        }
+        ataqueMonstro = (int) Math.round(ataqueMonstro/defesa);
+
         vidaHeroi -= ataqueMonstro;
         System.out.println("🐉 O monstro atacou e causou " + ataqueMonstro + " de dano!");
         return vidaHeroi;
     }
 
-    public static boolean defender(){
-        System.out.println("Taffeson defendeu o ataque");
-        return true;
+    public static void defender(){
+        defesa = 2;
+        System.out.println("\uD83D\uDEE1️Taffeson levantou seu escudo, recebendo 50% a menos de dano");
+    }
+
+    public static void sleep(int tempo){
+        try{
+            Thread.sleep(tempo);
+        } catch(InterruptedException e){
+            System.out.println(e.getMessage());
+        }
     }
     public static void main(String[] args) {
         int vidaHeroi = 60;
         int vidaMonstro = 50;
         int pocao = 2;
+
         int xp = 0;
         boolean especialDisponivel = true;
 
@@ -69,7 +77,9 @@ public class jogoFuncoesComplexo {
 
             System.out.print("Escolha: ");
             int escolha = sc.nextInt();
+            System.out.println();
 
+            defesa = 1;
             if (escolha == 1) {
                 // TODO: chamar a função atacar()
                 // Essa função deve:
@@ -120,7 +130,7 @@ public class jogoFuncoesComplexo {
             }
 
             // Turno do monstro
-            vidaHeroi = ataqueDeMonstro(vidaHeroi, defender(escolha));
+            vidaHeroi = ataqueDeMonstro(vidaHeroi, defesa);
         }
 
         if (vidaMonstro <= 0) {
