@@ -28,7 +28,7 @@ public class jogoFuncoesComplexo {
             ataqueMonstro *= 2;
             System.out.println("💥 O monstro acertou um CRÍTICO!");
         }
-        ataqueMonstro = (int) Math.round(ataqueMonstro/defesa);
+        ataqueMonstro = (int) Math.round((float) ataqueMonstro /defesa);
 
         vidaHeroi -= ataqueMonstro;
         System.out.println("🐉 O monstro atacou e causou " + ataqueMonstro + " de dano!");
