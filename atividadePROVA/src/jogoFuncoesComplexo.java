@@ -5,6 +5,12 @@ public class jogoFuncoesComplexo {
     static Scanner sc = new Scanner(System.in);
     static Random rand = new Random();
     static int defesa = 1;
+    static int vidaHeroi = 60;
+    static int vidaMonstro = 50;
+    static int pocao = 2;
+    static int xp = 0;
+    static boolean especialDisponivel = true;
+    static boolean emBatalha = true;
 
     public static int atacar(int vidaMonstro){
         int[] rangeDano = {8, 12};
@@ -37,24 +43,26 @@ public class jogoFuncoesComplexo {
 
     public static void defender(){
         defesa = 2;
-        System.out.println("\uD83D\uDEE1️Taffeson levantou seu escudo, recebendo 50% a menos de dano");
+        System.out.println("\uD83D\uDEE1️Taffeson levantou seu escudo, recebendo 50% a menos de dano!");
+    }
+
+    public static void fugir(){
+        emBatalha = false;
+    }
+
+    public static int ganharXP(){
+        int[] rangeXp = {10, 30};
+        return rand.nextInt(rangeXp[1] - rangeXp[0] + 1) + rangeXp[0];
     }
 
     public static void sleep(int tempo){
         try{
             Thread.sleep(tempo);
         } catch(InterruptedException e){
-            System.out.println(e.getMessage());
+            Thread.currentThread().interrupt();
         }
     }
     public static void main(String[] args) {
-        int vidaHeroi = 60;
-        int vidaMonstro = 50;
-        int pocao = 2;
-
-        int xp = 0;
-        boolean especialDisponivel = true;
-
         // História inicial
         /*System.out.println("Era uma vez em um reino distante...");
         System.out.println("Um jovem herói chamado Taffeson foi escolhido para enfrentar um terrível monstro.");
@@ -64,7 +72,7 @@ public class jogoFuncoesComplexo {
         System.out.println("Bem-vindo ao RPG das Funções!");
         System.out.println("Ajude Taffeson a derrotar o monstro para salvar o vilarejo.\n");*/
 
-        while (vidaHeroi > 0 && vidaMonstro > 0) {
+        while (vidaHeroi > 0 && vidaMonstro > 0 && emBatalha) {
             System.out.println("\n❤️ Vida de Taffeson: " + vidaHeroi + " | 🐉 Vida do Monstro: " + vidaMonstro);
             System.out.println("🎒 Poções restantes: " + pocao);
             System.out.println("Escolha sua ação:");
@@ -122,7 +130,7 @@ public class jogoFuncoesComplexo {
                 // Essa função deve:
                 // 1. Mostrar mensagem de que Taffeson fugiu da batalha.
                 // 2. Encerrar o jogo imediatamente.
-                // fugir();
+                fugir();
                 return;
             } else {
                 System.out.println("Opção inválida!");
@@ -130,20 +138,26 @@ public class jogoFuncoesComplexo {
             }
 
             // Turno do monstro
-            vidaHeroi = ataqueDeMonstro(vidaHeroi, defesa);
+            if(vidaMonstro > 0){
+                vidaHeroi = ataqueDeMonstro(vidaHeroi, defesa);
+                sleep(2000);
+            }
         }
-
+        System.out.println(emBatalha);
         if (vidaMonstro <= 0) {
             // TODO: chamar a função ganharXP()
             // Essa função deve:
             // 1. Gerar um número aleatório entre 10 e 30.
             // 2. Retornar esse valor como experiência (XP).
             // 3. Mostrar mensagem de vitória com o XP ganho.
-            // xp = ganharXP();
-            // System.out.println("🎉 Taffeson derrotou o monstro e ganhou " + xp + " XP!");
-            // System.out.println("🏆 O vilarejo foi salvo graças à bravura de Taffeson!");
-        } else {
-            // System.out.println("💀 Taffeson foi derrotado... o vilarejo está em perigo!");
+            xp = ganharXP();
+            System.out.println("🎉 Taffeson derrotou o monstro e ganhou " + xp + " XP!");
+            System.out.println("🏆 O vilarejo foi salvo graças à bravura de Taffeson!");
+        } else if(!emBatalha){
+            System.out.println("💀 Taffeson fugiu, abandonando o vilarejo... o vilarejo está em perigo!");
+        }
+        else {
+            System.out.println("💀 Taffeson foi derrotado... o vilarejo está em perigo!");
         }
     }
 
