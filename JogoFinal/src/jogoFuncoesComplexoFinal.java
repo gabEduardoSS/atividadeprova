@@ -14,7 +14,7 @@ public class jogoFuncoesComplexoFinal {
     static boolean usaPoder = true;
     static boolean emBatalha = true;
 
-    public static int atacar(int vidaMonstro){
+    public static int atacar(int vidaMonstro){ // Eduardo
         int[] rangeDano = {8, 12};
         int critico = 1;
         String strAtaque = "NORMAL";
@@ -28,7 +28,7 @@ public class jogoFuncoesComplexoFinal {
         return vida;
     }
 
-    public static int ataqueDeMonstro(int vidaHeroi, int defesa){
+    public static int ataqueDeMonstro(int vidaHeroi, int defesa){ // Eduardo
         int ataqueMonstro = rand.nextInt(10) + 5; // dano entre 5 e 15
         boolean critico = rand.nextInt(100) < 15; // 15% de chance crítico
         if (critico) {
@@ -42,7 +42,7 @@ public class jogoFuncoesComplexoFinal {
         return vidaHeroi;
     }
     
-    public static int usarPocao(int vidaHeroi) {
+    public static int usarPocao(int vidaHeroi) { // João
         int vidaPocao = 15;
         System.out.println("Dos fundos da sua bolsa, você pega uma poção e a bebe");
         if (vidaHeroi < 45) {
@@ -58,28 +58,28 @@ public class jogoFuncoesComplexoFinal {
         return vidaHeroi;
     }
 
-    public static int poderEspecial(int vidaMonstro ,boolean especialDisponivel) {
+    public static int poderEspecial(int vidaMonstro ,boolean especialDisponivel) { // João
         vidaMonstro = vidaMonstro - danoEspecial;
         System.out.println("O monstro recebe " + danoEspecial +" de dano ");
         especialDisponivel = false;
         return vidaMonstro;
     }
 
-    public static void defender(){
+    public static void defender(){ // Eduardo
         defesa = 2;
         System.out.println("\uD83D\uDEE1️Taffeson levantou seu escudo, recebendo 50% a menos de dano!");
     }
 
-    public static void fugir(){
+    public static void fugir(){ // Eduardo
         emBatalha = false;
     }
 
-    public static int ganharXP(){
+    public static int ganharXP(){ // Eduardo
         int[] rangeXp = {10, 30};
         return rand.nextInt(rangeXp[1] - rangeXp[0] + 1) + rangeXp[0];
     }
 
-    public static void sleep(int tempo){
+    public static void sleep(int tempo){ // João
         try{
             Thread.sleep(tempo);
         } catch(InterruptedException e){
