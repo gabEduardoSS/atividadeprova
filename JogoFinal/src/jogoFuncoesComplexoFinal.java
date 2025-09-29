@@ -139,7 +139,7 @@ public class jogoFuncoesComplexoFinal {
                 defender();
             } else if (escolha == 4) {
                 System.out.println("Taffeson se concentra");
-                if (usaPoder == true) {
+                if (usaPoder) {
                     vidaMonstro = poderEspecial(vidaMonstro, especialDisponivel);
                     usaPoder = !especialDisponivel;
                 } else {
